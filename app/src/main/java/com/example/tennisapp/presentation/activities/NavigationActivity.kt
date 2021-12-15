@@ -1,5 +1,6 @@
 package com.example.tennisapp.presentation.activities
 
+import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.view.Menu
 import androidx.appcompat.app.AppCompatActivity
@@ -9,6 +10,9 @@ import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
+import com.bumptech.glide.Glide
+import com.bumptech.glide.request.target.SimpleTarget
+import com.bumptech.glide.request.transition.Transition
 import com.example.tennisapp.R
 import com.example.tennisapp.databinding.ActivityNavigationBinding
 import com.google.android.material.navigation.NavigationView
@@ -24,6 +28,8 @@ class NavigationActivity : AppCompatActivity() {
 
         binding = ActivityNavigationBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        loadJsonPicture()
 
         setSupportActionBar(binding.appBarNavigation.toolbar)
 
@@ -50,5 +56,14 @@ class NavigationActivity : AppCompatActivity() {
     override fun onSupportNavigateUp(): Boolean {
         val navController = findNavController(R.id.nav_host_fragment_content_navigation)
         return navController.navigateUp(appBarConfiguration) || super.onSupportNavigateUp()
+    }
+
+    private fun loadJsonPicture(){
+        Glide.with(this).load("http://95.217.132.144/tennis/background_image.jpg")
+            .into(object : SimpleTarget<Drawable?>() {
+                override fun onResourceReady(dr: Drawable, tran: Transition<in Drawable?>?) {
+                    binding.drawerLayout.background = dr
+                }
+            })
     }
 }

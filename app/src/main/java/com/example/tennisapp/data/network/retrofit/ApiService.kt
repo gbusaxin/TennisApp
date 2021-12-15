@@ -6,4 +6,7 @@ import retrofit2.http.GET
 interface ApiService {
     @GET("tennis_teams.json")
     suspend fun loadTeamList():List<TeamItemDto>
+
+    @GET("background_image.jpg")
+    suspend fun loadBackground():String
 }
