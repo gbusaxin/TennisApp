@@ -66,7 +66,7 @@ class NavigationActivity : AppCompatActivity() {
                     }
 
                     override fun onLoadCleared(p0: Drawable?) {
-                        TODO("Not yet implemented")
+
                     }
                 })
         } catch (e: Exception) {
