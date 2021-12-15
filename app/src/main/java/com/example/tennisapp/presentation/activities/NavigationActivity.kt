@@ -11,12 +11,11 @@ import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.bumptech.glide.Glide
-import com.bumptech.glide.request.target.SimpleTarget
+import com.bumptech.glide.request.target.CustomTarget
 import com.bumptech.glide.request.transition.Transition
 import com.example.tennisapp.R
 import com.example.tennisapp.databinding.ActivityNavigationBinding
 import com.google.android.material.navigation.NavigationView
-import com.google.android.material.snackbar.Snackbar
 
 class NavigationActivity : AppCompatActivity() {
 
@@ -58,12 +57,19 @@ class NavigationActivity : AppCompatActivity() {
         return navController.navigateUp(appBarConfiguration) || super.onSupportNavigateUp()
     }
 
-    private fun loadJsonPicture(){
-        Glide.with(this).load("http://95.217.132.144/tennis/background_image.jpg")
-            .into(object : SimpleTarget<Drawable?>() {
-                override fun onResourceReady(dr: Drawable, tran: Transition<in Drawable?>?) {
-                    binding.drawerLayout.background = dr
-                }
-            })
+    private fun loadJsonPicture() {
+        try {
+            Glide.with(this).load("http://95.217.132.144/tennis/background_image.jpg")
+                .into(object : CustomTarget<Drawable>() {
+                    override fun onResourceReady(dr: Drawable, tran: Transition<in Drawable?>?) {
+                        binding.drawerLayout.background = dr
+                    }
+
+                    override fun onLoadCleared(p0: Drawable?) {
+                        TODO("Not yet implemented")
+                    }
+                })
+        } catch (e: Exception) {
+        }
     }
 }

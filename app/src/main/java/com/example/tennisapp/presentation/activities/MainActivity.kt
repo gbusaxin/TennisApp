@@ -8,7 +8,7 @@ import android.widget.SearchView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import com.bumptech.glide.Glide
-import com.bumptech.glide.request.target.SimpleTarget
+import com.bumptech.glide.request.target.CustomTarget
 import com.bumptech.glide.request.transition.Transition
 import com.example.tennisapp.data.network.retrofit.ApiFactory
 import com.example.tennisapp.databinding.ActivityMainBinding
@@ -39,7 +39,7 @@ class MainActivity : AppCompatActivity() {
         viewModel.teamList.observe(this, {
             adapter = TeamAdapter(it as ArrayList<TeamItem>)
             rvTeam.adapter = adapter
-            Log.d("CHECK_DATA",it.toString())
+            Log.d("CHECK_DATA", it.toString())
 
             adapter.onTeamClickListener = {
                 val intent = Intent(this@MainActivity, NavigationActivity::class.java)
@@ -62,13 +62,20 @@ class MainActivity : AppCompatActivity() {
 
     }
 
-    private fun loadJsonPicture(){
-        Glide.with(this).load("http://95.217.132.144/tennis/background_image.jpg")
-            .into(object : SimpleTarget<Drawable?>() {
-                override fun onResourceReady(dr: Drawable, tran: Transition<in Drawable?>?) {
-                    binding.mainActivityLayout.background = dr
-                }
-            })
+    private fun loadJsonPicture() {
+        try {
+            Glide.with(this).load("http://95.217.132.144/tennis/background_image.jpg")
+                .into(object : CustomTarget<Drawable>() {
+                    override fun onResourceReady(p0: Drawable, p1: Transition<in Drawable>?) {
+                        binding.mainActivityLayout.background = p0
+                    }
+
+                    override fun onLoadCleared(p0: Drawable?) {
+
+                    }
+                })
+        } catch (e: Exception) {
+        }
     }
 }
 
